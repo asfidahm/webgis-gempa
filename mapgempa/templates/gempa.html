@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name = "viewport", content="width=device-width, initial-scale=1.0">
+    <title>Gempa Satuan</title>
+
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    
+    <!-- bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <!-- ajax cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+
+    <style>
+    #map{
+      position: absolute;
+      top: 65px;
+      bottom: 65px;
+      width: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <div class="d-flex flex-column flex-md-row align-items-center px-md-4 border-bottom shadow-sm">
+        <a href="http://127.0.0.1:8000/"><img src="https://srgi.big.go.id/assets/images/big.png" style="height: 45px; margin: 10px 20px"></a>
+        <nav class="my-md-0 mr-md-3">
+          <a class="p-2 text-dark menu-item" href="https://srgi.big.go.id" style="border-right-style: solid;border-width: thin; text-decoration: none;">Beranda</a>
+          <a class="p-2 text-dark menu-item" href="https://srgi.big.go.id" style="border-right-style: solid;border-width: thin; text-decoration: none;">Tentang</a>
+          <a class="p-2 text-dark menu-item" href="https://srgi.big.go.id" style="border-right-style: solid;border-width: thin; text-decoration: none;">Gempa 2021</a>
+        </nav>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div id="main-body" style="margin-top: 65px;">
+        <div id="flex-center position-ref full-height">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-sm-8 col-md-9" id="map"></div>
+        <div class="col-12 col-sm-4 col-md-3">
+          <div class="row">
+            <div class="col-12">Lokasi : <span id="lokasi"></span></div>
+            <div class="col-12">Magnitudo : <span id="magnitude"></span></div>
+            <div class="col-12">Estimasi Radius : <span id="radius"></span></div>
+            <div class="col-12">Kluster : <span id="kluster"></span></span></div>
+            <div class="col-12">
+              <input type="button" value="Generate Table" onclick="GenerateTable()"/>
+              <div id="dvTable"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- bootsrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- map js -->
+    <script src="{% static 'gempa.js' %}"></script>
+  </body>
+</html>
