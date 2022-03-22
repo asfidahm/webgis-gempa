@@ -3,7 +3,9 @@ var map = L.map('map', {
   // zoomAnimation: false,
   // preferCanvas: true,
   center: [-2, 118],
-  zoom: 6
+  zoom: 6,
+  zoomControl: false,
+  attributionControl: false
 });
 
 // GET URL PARAMETERS
@@ -75,7 +77,11 @@ function data_gempa(datagempa){
 // GET GEOJSON
 var rad_gempa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/gempa/" + id,{
   pointToLayer: function(feature, latlng) {
-    map.flyTo(latlng, 9);
+    if (feature.properties.estimasiradius > 4.5) {
+      map.flyTo(latlng, 8);
+    } else {
+      map.flyTo(latlng, 8);
+    }
     return new L.circle (latlng, {color: '#f54242', radius: feature.properties.estimasiradius*1000, fillOpacity: 0});
   }
 }).addTo(map);
@@ -164,7 +170,7 @@ var overlayMaps = {
   "Jembatan Nasional": jembatan
 };
 
-L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
+// L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
 
 // EXTRA FEATURE
 function clickZoomGempa(e) {
