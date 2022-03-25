@@ -62,8 +62,8 @@ def load_data(verbose=True):
         'geom': 'POINT',
     }
 
-    gempa_shp = Path(__file__).resolve().parent / 'data' / 'Gempa_2021_Indo.shp'
-    jembatan_shp = Path(__file__).resolve().parent / 'data' / 'Jembatan.shp'
+    gempa_shp = Path(__file__).resolve().parent / 'data' / 'datagempa.shp'
+    jembatan_shp = Path(__file__).resolve().parent / 'data' / 'Jembatan40L.shp'
     bedungan_shp = Path(__file__).resolve().parent / 'data' / 'Bendungan.shp'
     tpa_shp = Path(__file__).resolve().parent / 'data' / 'TPA.shp'
     spam_hp = Path(__file__).resolve().parent / 'data' / 'SPAM.shp'

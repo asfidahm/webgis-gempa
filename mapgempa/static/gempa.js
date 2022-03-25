@@ -30,55 +30,41 @@ var iconGempa = L.icon({
   iconSize: [40, 40],
 });
 
-// // LIST INFRASTRUKTUR TABLE
-// function GenerateTable(data) {
-//   //Create a HTML Table element.
-//  var table = document.createElement("TABLE");
-//  table.border = "1";
-
-//  //Add the header row.
-//  var row = table.insertRow(-1);
-//      var headerCell = document.createElement("TH");
-//      headerCell.innerHTML = "NAME";  //Fieldname
-//      row.appendChild(headerCell);
-//      var headerCell = document.createElement("TH");
-//      headerCell.innerHTML = "LINTANG";   //Fieldname
-//      row.appendChild(headerCell);
-//      var headerCell = document.createElement("TH");
-//      headerCell.innerHTML = "BUJUR";   //Fieldname
-//      row.appendChild(headerCell);
-
-//  //Add the data rows. 
-//  for (var i = 0; i < datajembatan.length; i++) {
-//      row = table.insertRow(-1);
-
-//          var cell = row.insertCell(-1);
-//          cell.innerHTML = datajembatan[i].NAME;
-//          var cell = row.insertCell(-1);
-//          cell.innerHTML = datajembatan[i].LINTANG;
-//          var cell = row.insertCell(-1);
-//          cell.innerHTML = datajembatan[i].BUJUR;
-//          var cell = row.insertCell(-1);
-//  }
-
-//  var dvTable = document.getElementById("dvTable");
-//  dvTable.innerHTML = "";
-//  dvTable.appendChild(table);
-// }
-
 // FUNCTION FOR DATA DISPLAYING
-function data_gempa(datagempa){
-  document.getElementById("lokasi").innerHTML = datagempa[0].NAME;
-  document.getElementById("magnitude").innerHTML = datagempa[0].MAG;
-  document.getElementById("radius").innerHTML = datagempa[0].RAD;
-  document.getElementById("kluster").innerHTML = datagempa[0].CLUSTER;
+function data_gempa(feature){
+  document.getElementById("mag").innerHTML = feature.properties.magnitude;
+  document.getElementById("kluster").innerHTML = feature.properties.cluster;
+  document.getElementById("lintang").innerHTML = feature.properties.lintang_y;
+  document.getElementById("bujur").innerHTML = feature.properties.bujur_x;
+  document.getElementById("rad").innerHTML = feature.properties.estimasiradius;
+  document.getElementById("infra").innerHTML = feature.properties.jumlahinf;
 };
+
+function data_infrastruktur(parent, feature){
+  new_row = document.createElement('div');
+  new_row.className = "card card-body";
+  main_info = document.createElement('div');
+  main_info.className = "main-info";
+  main_info.textContent = feature.properties.name;
+  side_info = document.createElement('div');
+  side_info.textContent = feature.properties.kota;
+  side_info.className = "side-info";
+  new_row.appendChild(main_info)
+  new_row.appendChild(side_info)
+  parent.appendChild(new_row)
+};
+
+function info_active(parent, layer) {
+  if (Object.keys(layer["_layers"]).length != 0) {
+    parent.style.display = "flex";
+  }
+}
 
 // GET GEOJSON
 var rad_gempa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/gempa/" + id,{
   pointToLayer: function(feature, latlng) {
     if (feature.properties.estimasiradius > 4.5) {
-      map.flyTo(latlng, 8);
+      map.flyTo(latlng, 8,{duration: 1});
     } else {
       map.flyTo(latlng, 8);
     }
@@ -86,62 +72,53 @@ var rad_gempa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/gempa/" + id,{
   }
 }).addTo(map);
 
-datagempa = []
 var gempa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/gempa/" + id,{
   pointToLayer: function(feature, latlng) {
     return new L.marker (latlng, {icon: iconGempa});
   },
   onEachFeature: function (feature,layer) {
-    datagempa.push({
-      NAME: feature.properties.name,
-      LINTANG : feature.properties.lintang_y,
-      BUJUR : feature.properties.bujur_x,
-      MAG : feature.properties.magnitude,
-      RAD : feature.properties.estimasiradius,
-      DATE : feature.properties.datetime,
-      CLUSTER : feature.properties.cluster,
-      INF : feature.properties.jumlahinf,
-    })
-    // data_gempa(datagempa);
+    data_gempa(feature);
   }
 }).addTo(map);
 
-var datajembatan = []
+const info_jembatan = document.getElementById("jembatan-info")
+const elemjembatan = document.getElementById("JembatanNasional")
 var jembatan = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/jembatan/" + id,{
   onEachFeature: function (feature,layer) {
     layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
-    datajembatan.push({
-      NAME: feature.properties.name,
-      LINTANG : feature.properties.lintang_y.toFixed(3),
-      BUJUR : feature.properties.bujur_x.toFixed(3),
-      NOMOR : feature.properties.nomor_jembatan,
-    })
-    // GenerateTable(datajembatan)
+    data_infrastruktur(elemjembatan, feature)
   },
   pointToLayer: function(feature, latlng) {
     return new L.circleMarker (latlng, {color: '#2c56de', radius: 3, fillOpacity: 1});
   }
 }).addTo(map);
 
-var databendungan = []
+const info_bendungan = document.getElementById("bendungan-info")
+const elembendungan = document.getElementById("Bendungan")
 var bendungan = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/bendungan/" + id,{
   onEachFeature: function (feature,layer) {
     layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
-    databendungan.push({
-      NAME: feature.properties.name,
-      LINTANG : feature.properties.lintang_y.toFixed(3),
-      BUJUR : feature.properties.bujur_x.toFixed(3),
-      PROV : feature.properties.provinsi,
-      KOT : feature.properties.kota,
-    })
-  },
+    data_infrastruktur(elembendungan, feature)
+},
   pointToLayer: function(feature, latlng) {
     return new L.circleMarker (latlng, {color: '#de2c2c', radius: 3, fillOpacity: 1});
   }
 }).addTo(map);
 
-var datatpa = []
+const info_tpa = document.getElementById("tpa-info")
+const elemtpa = document.getElementById("TPA")
 var tpa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/tpa/" + id,{
+  onEachFeature: function (feature,layer) {
+    layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
+    data_infrastruktur(elemtpa, feature)
+  },
+  pointToLayer: function(feature, latlng) {
+    return new L.circleMarker (latlng, {color: '#61de2c', radius: 3, fillOpacity: 1});
+  }
+}).addTo(map);
+
+var dataspam = []
+var spam = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/spam/" + id,{
   onEachFeature: function (feature,layer) {
     layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
     datatpa.push({
@@ -153,7 +130,75 @@ var tpa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/tpa/" + id,{
     })
   },
   pointToLayer: function(feature, latlng) {
-    return new L.circleMarker (latlng, {color: '#61de2c', radius: 3, fillOpacity: 1});
+    return new L.circleMarker (latlng, {color: '#31941b', radius: 3, fillOpacity: 1});
+  }
+}).addTo(map);
+
+var dataiplt = []
+var iplt = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/iplt/" + id,{
+  onEachFeature: function (feature,layer) {
+    layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
+    datatpa.push({
+      NAME: feature.properties.name,
+      LINTANG : feature.properties.lintang_y.toFixed(3),
+      BUJUR : feature.properties.bujur_x.toFixed(3),
+      PROV : feature.properties.provinsi,
+      KOT : feature.properties.kota,
+    })
+  },
+  pointToLayer: function(feature, latlng) {
+    return new L.circleMarker (latlng, {color: '#32341b', radius: 3, fillOpacity: 1});
+  }
+}).addTo(map);
+
+var dataipal = []
+var ipal = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/ipal/" + id,{
+  onEachFeature: function (feature,layer) {
+    layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
+    datatpa.push({
+      NAME: feature.properties.name,
+      LINTANG : feature.properties.lintang_y.toFixed(3),
+      BUJUR : feature.properties.bujur_x.toFixed(3),
+      PROV : feature.properties.provinsi,
+      KOT : feature.properties.kota,
+    })
+  },
+  pointToLayer: function(feature, latlng) {
+    return new L.circleMarker (latlng, {color: '#87361b', radius: 3, fillOpacity: 1});
+  }
+}).addTo(map);
+
+var datarusunawa = []
+var rusunawa = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/rusunawa/" + id,{
+  onEachFeature: function (feature,layer) {
+    layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
+    datatpa.push({
+      NAME: feature.properties.name,
+      LINTANG : feature.properties.lintang_y.toFixed(3),
+      BUJUR : feature.properties.bujur_x.toFixed(3),
+      PROV : feature.properties.provinsi,
+      KOT : feature.properties.kota,
+    })
+  },
+  pointToLayer: function(feature, latlng) {
+    return new L.circleMarker (latlng, {color: '#123987b', radius: 3, fillOpacity: 1});
+  }
+}).addTo(map);
+
+var datarusus = []
+var rusus = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/rusus/" + id,{
+  onEachFeature: function (feature,layer) {
+    layer.bindPopup(feature.properties.name).on('click', clickZoomInf)
+    datatpa.push({
+      NAME: feature.properties.name,
+      LINTANG : feature.properties.lintang_y.toFixed(3),
+      BUJUR : feature.properties.bujur_x.toFixed(3),
+      PROV : feature.properties.provinsi,
+      KOT : feature.properties.kota,
+    })
+  },
+  pointToLayer: function(feature, latlng) {
+    return new L.circleMarker (latlng, {color: '#1b', radius: 3, fillOpacity: 1});
   }
 }).addTo(map);
 
@@ -179,3 +224,9 @@ function clickZoomGempa(e) {
 function clickZoomInf(e) {
   map.flyTo(e.target.getLatLng());
 }
+
+setTimeout(function() {
+  info_active(info_jembatan, jembatan)
+  info_active(info_bendungan, bendungan)
+}, 200);
+

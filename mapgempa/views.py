@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from mapgempa.models import gempa, jembatan_nasional, bendungan, tpa, spam, iplt, ipal, rumah_khusus, rusunawa
-from mapgempa.serializers import  GempaSerializer, JembatanSerializer, BendunganSerializer, TPASerializer
+from mapgempa.serializers import  GempaSerializer, JembatanSerializer, BendunganSerializer, TPASerializer, SPAMSerializer, IPLTSerializer, IPALSerializer, RususSerializer, RusunawaSerializer
 from django.contrib.gis.measure import D
 
 # Create your views here.
@@ -54,5 +54,45 @@ def id_tpa(request, pk):
     sm = gempa.objects.get(pk=pk)
     queryset = tpa.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
     serializer = TPASerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def id_spam(request, pk):
+    sm = gempa.objects.get(pk=pk)
+    queryset = spam.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
+    serializer = SPAMSerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def id_iplt(request, pk):
+    sm = gempa.objects.get(pk=pk)
+    queryset = iplt.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
+    serializer = IPLTSerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def id_ipal(request, pk):
+    sm = gempa.objects.get(pk=pk)
+    queryset = ipal.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
+    serializer = IPALSerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def id_rusunawa(request, pk):
+    sm = gempa.objects.get(pk=pk)
+    queryset = rusunawa.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
+    serializer = RusunawaSerializer(queryset, many=True)
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def id_rusus(request, pk):
+    sm = gempa.objects.get(pk=pk)
+    queryset = rumah_khusus.objects.filter(geom__distance_lt = (sm.geom, D(km=sm.estimasiradius)))
+    serializer = RususSerializer(queryset, many=True)
     
     return Response(serializer.data)

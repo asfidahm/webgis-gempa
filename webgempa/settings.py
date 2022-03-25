@@ -83,7 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': 'LOCALHOST',
-        'NAME': 'webdb',
+        'NAME': 'jembatanbedadb',
         'PASSWORD': '321654',
         'PORT': '5432',
         'USER': 'postgres',
