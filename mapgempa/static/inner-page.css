@@ -1,0 +1,45 @@
+.tabel-page {
+    margin-top: 24px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+#tabel-data{
+    overflow-x: auto;
+}
+
+.simbol {
+    border-radius: 50%; 
+    width: 20px; 
+    height: 20px; 
+    border: 1px solid white;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.konten {
+    text-indent: 50px;
+    text-align: justify;
+}
+
+@media (max-width: 576px){
+    .tabel-page {
+        font-size: 12px;
+    }
+    .simbol {
+        width: 15px; 
+        height: 15px; 
+    }
+}
+
+@media (max-width: 375px) {
+    .tabel-page {
+        font-size: 10px;
+    }
+    .simbol {
+        width: 12px; 
+        height: 12px; 
+    }
+}

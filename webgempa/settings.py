@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.gis',
+    'django_filters',
+    'widget_tweaks',
     'rest_framework',
     'rest_framework_gis',
     'djgeojson',

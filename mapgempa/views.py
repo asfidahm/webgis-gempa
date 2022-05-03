@@ -1,24 +1,51 @@
 from django.views.generic.base import TemplateView
+from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from mapgempa.models import gempa, jembatan_nasional, bendungan, tpa, spam, iplt, ipal, rumah_khusus, rusunawa
+from mapgempa.models import gempa, jembatan_nasional, bendungan, tpa, spam, iplt, ipal, rumah_khusus, rusunawa, kluster
 from mapgempa.serializers import  GempaSerializer, JembatanSerializer, BendunganSerializer, TPASerializer, SPAMSerializer, IPLTSerializer, IPALSerializer, RususSerializer, RusunawaSerializer
+
+from .filters import GempaFilter
+
 from django.contrib.gis.measure import D
 
 # Create your views here.
 
-class GempaTahunanView(TemplateView):
-    template_name = 'gempa_tahunan.html'
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 class GempaView(TemplateView):
     template_name = 'gempa.html'
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
+class KuesionerView(TemplateView):
+    template_name = 'kuesioner.html'
 
+def KlusterView(request):
+    query = kluster.objects.order_by('id')
+
+    return render(request, 'klustergempa.html', {'kluster': query})
+
+def gempa_filter(request):
+    context = {}
+
+    query = gempa.objects.order_by('id')
+    gempa_filter = GempaFilter(request.GET, queryset=query)
+
+    context["filtered_gempas"] = gempa_filter
+
+    paginated_gempas = Paginator(gempa_filter.qs, 50)
+    page_num = request.GET.get('page')
+    gempa_page_obj = paginated_gempas.get_page(page_num)
+
+    context["gempa_page_obj"] = gempa_page_obj
+
+    return render(request, 'tabelgempa.html', context=context)
+
+# WEB API
 @api_view(['GET'])
 def gempaall(request):
     queryset = gempa.objects.order_by('id')

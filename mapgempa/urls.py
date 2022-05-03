@@ -1,11 +1,14 @@
 from django.urls import path
-from mapgempa.views import GempaTahunanView, GempaView, IndexView, gempawithid, gempaall, id_jembatan, id_bendungan, id_tpa, id_ipal, id_iplt, id_spam, id_rusus, id_rusunawa
+from mapgempa.views import KlusterView, GempaView, IndexView, KuesionerView, gempa_filter, gempawithid, gempaall, id_jembatan, id_bendungan, id_tpa, id_ipal, id_iplt, id_spam, id_rusus, id_rusunawa
 
 app_name = "gempa"
 
 urlpatterns = [
-    path("", GempaView.as_view()),
-    path("gempa2021/", GempaTahunanView.as_view()),
+    path("", IndexView.as_view()),
+    path("infrastruktur-terdampak", GempaView.as_view()),
+    path("kluster-gempa/", KlusterView),
+    path("datagempa/", gempa_filter),
+    path("kuesioner/", KuesionerView.as_view()),
     path("api/gempa/", gempaall),
     path("api/gempa/<int:pk>", gempawithid),
     path("api/jembatan/<int:pk>", id_jembatan),

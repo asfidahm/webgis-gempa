@@ -1,0 +1,98 @@
+{% extends 'inner-page.html' %}
+
+{% block title %}
+Data Kejadian Gempa
+{% endblock %}
+
+{% block subtitle %}
+Data Kejadian Gempa
+{% endblock %}
+
+{% load widget_tweaks %}
+{% load mapgempa_extras %}
+
+{% block content %}
+<form method="get">
+  <div class="well">
+    <h4 style="margin-top: 0">Filter</h4>
+    <div class="row">
+      <div class="form-group col-4 col-sm-2 col-md-2 d-flex align-content-center flex-wrap">Kluster :</div>
+      <div class="form-group col-4 col-sm-4 col-md-4">
+        <select class="form-control" name="cluster" step="any" id="id_cluster">
+          <option>--</option>
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary col-3 col-sm-2 col-md-2" onclick="console.log('nyoba dulu')">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+    </div>
+  </div>
+</form>
+<div id="tabel-data">
+  <table class="table tabel-page" id="tabel-data">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Lokasi</th>
+        <th scope="col">Waktu</th>
+        <th scope="col">Magnitude</th>
+        <th scope="col">Infrastruktur Terdampak</th>
+        <th scope="col">Kluster</th>
+        <th scope="col">Go To</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gempa in gempa_page_obj %}
+      <tr>
+        <th scope="row">{{ gempa.id }}</th>
+        <td>{{ gempa.name }}</td>
+        <td>{{ gempa.datetime }}</td>
+        <td>{{ gempa.magnitude }}</td>
+        <td>{{ gempa.jumlahinf }}</td>
+        <td>{{ gempa.cluster }}</td>
+        <td><a href="http://127.0.0.1:8000/infrastruktur-terdampak?id={{ gempa.id }}">Go To</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<nav aria-label="..." style="display: flex; justify-content: center; margin-top: 20px;">
+  <ul class="pagination pagination-sm">
+    {% if gempa_page_obj.has_previous %}
+    <li class="page-item" id="previous-page">
+      <a class="page-link" href="{% relative_url gempa_page_obj.previous_page_number 'page' request.GET.urlencode %}"><</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled" id="previous-page">
+      <a class="page-link" href=""><</a>
+    </li>
+    {% endif %}
+    
+    <li class="page-item disabled" aria-current="page">
+      <a class="page-link" id="current-page">{{ gempa_page_obj.number }}</a>
+    </li>
+
+    {% if gempa_page_obj.has_next %}
+    <li class="page-item" id="next-page">
+      <a class="page-link" href="{% relative_url gempa_page_obj.next_page_number 'page' request.GET.urlencode %}">></a>
+    </li>
+    {% else %}
+    <li class="page-item disabled" id="previous-page">
+      <a class="page-link" href="">></a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const param = urlParams.get('cluster')
+  const id = param || '--';
+  document.getElementById('id_cluster').value = id;
+</script>
+{% endblock %}

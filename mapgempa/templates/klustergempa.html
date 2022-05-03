@@ -1,0 +1,83 @@
+{% extends 'inner-page.html' %}
+
+{% block title %}
+Kluster Data Gempa
+{% endblock %}
+
+{% block subtitle %}
+Kluster Data Gempa
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<h2 class="text-center">Kluster Data Gempa Menggunakan Algoritma K-Means Clustering</h3>
+<div id="mappage" class="mt-5"></div>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-6" data-aos="fade-up">
+    <img src="{% static 'assets/img/cluster_figure.png' %}" class="img-fluid" alt="diagram-kluster">
+  </div>
+  <div class="mt-4" data-aos="fade-up">
+    <table class="table tabel-page" class="tabel-page">
+      <tr>
+        <th rowspan="2" class="col-sm-1">Simbol</th>
+        <th rowspan="2" class="col-sm-2">Kluster</th>
+        <th colspan="2" scope="colgroup" class="col-6">Centroid</th>
+        <th rowspan="2" class="col-3">Jumlah Data</th>
+      </tr>
+      <tr>
+        <th scope="col" class="col-3">Magnitudo</th>
+        <th scope="col" class="col-3">Infrastruktur Berpotensi Terdampak</th>
+      </tr>
+      {% for kluster in kluster %}
+      <tr>
+        <td scope="row">
+          <span class="simbol" style="background-color: {{ kluster.warna }};"></span>
+        </td>
+        <th class="my-auto">{{ kluster.name }}</th>
+        <td>{{ kluster.mag_centroid }}</td>
+        <td>{{ kluster.inf_centroid }}</td>
+        <td>{{ kluster.jumlah }}</td>
+      </tr>
+      {% endfor %}
+      <!-- <tr>
+        <td scope="row">
+          <span class="simbol" style="background-color: #FB010B;"></span>
+        </td>
+        <th>Kluster 1</th>
+        <td>4.725</td>
+        <td>10.984</td>
+        <td>100,000</td>
+      </tr>
+      <tr>
+        <td scope="row">
+          <span class="simbol" style="background-color: #FB010B;"></span>
+        </td>
+        <th>Kluster 2</th>
+        <td>5.634</td>
+        <td>317.947</td>
+        <td>100,000</td>
+      </tr> -->
+    </table>
+  </div>
+  <div class="col-lg-12 mt-4 konten">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam massa, egestas feugiat odio at, posuere elementum nulla. 
+      Maecenas malesuada arcu a lectus egestas posuere. Fusce non vulputate massa. Donec cursus tellus et leo elementum, vel efficitur diam 
+      fermentum. Quisque non tellus dui. Mauris porttitor, justo vel luctus varius, neque arcu rutrum nunc, a placerat metus nibh eu metus. Donec 
+      id quam tempus, tempus orci nec, tempus eros. Nullam ultricies posuere condimentum.
+    </p>
+    <div class="d-flex justify-content-center" style="height: 30px;" data-aos="fade-up">
+      <img src="{% static 'assets/img/equation.png' %}" class="img-fluid" alt="rumus-radius">
+    </div>
+    <p>
+      Aliquam urna felis, hendrerit et sodales nec, porta consectetur urna. Nulla in venenatis libero. Orci varius natoque penatibus et magnis 
+      dis parturient montes, nascetur ridiculus mus. Integer quis tincidunt nibh. Curabitur rhoncus tellus vitae diam congue, et semper arcu imperdiet. 
+      Sed volutpat in lacus eget lobortis. Nam malesuada ligula et felis pharetra placerat. Nulla facilisi. Sed a mi semper ante vestibulum scelerisque. 
+      Suspendisse ultrices vitae justo et dapibus. Nulla facilisi. Sed tempus est nec velit gravida, egestas tempus est molestie. Nunc non dui nulla. 
+      Nullam vehicula, urna at hendrerit feugiat, orci ligula lacinia nulla, posuere fringilla purus purus a nibh. Donec at diam id neque sodales tristique.
+    </p>
+  </div>
+</div>
+{% endblock %}
+

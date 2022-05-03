@@ -137,3 +137,15 @@ class rumah_khusus(models.Model):
     def __str__(self):
         """Return string representation."""
         return self.name
+
+class kluster(models.Model):
+    
+    name = models.CharField(max_length=255)
+    mag_centroid = models.FloatField()
+    inf_centroid = models.FloatField()
+    jumlah = models.IntegerField()
+    warna = models.CharField(max_length=10)
+
+    def __str__(self):
+        """Return string representation."""
+        return self.name
