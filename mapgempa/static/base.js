@@ -10,7 +10,7 @@ function openNavLeft() {
   }
   if ($(window).width() < 412) {
     document.getElementById("toggle-left").style.left = "75vw";
-    document.getElementById("toggle-left").style.top = "90%";
+    document.getElementById("toggle-left").style.top = "85%";
 
     document.getElementById("sidebar-left").style.left = "0px";
     document.getElementById("map").style.left = "100vw";
@@ -52,7 +52,7 @@ function openNavRight() {
   }
   if ($(window).width() < 412) {
     document.getElementById("toggle-right").style.right = "75vw";
-    document.getElementById("toggle-right").style.top = "90%";
+    document.getElementById("toggle-right").style.top = "85%";
 
     document.getElementById("sidebar-right").style.right = "0px";
     document.getElementById("map").style.right = "100vw";

@@ -53,7 +53,7 @@ Data Kejadian Gempa
         <td>{{ gempa.magnitude }}</td>
         <td>{{ gempa.jumlahinf }}</td>
         <td>{{ gempa.cluster }}</td>
-        <td><a href="http://127.0.0.1:8000/infrastruktur-terdampak?id={{ gempa.id }}">Go To</a></td>
+        <td><a href="/infrastruktur-terdampak?id={{ gempa.id }}">Go To</a></td>
       </tr>
       {% endfor %}
     </tbody>
@@ -94,5 +94,6 @@ Data Kejadian Gempa
   const param = urlParams.get('cluster')
   const id = param || '--';
   document.getElementById('id_cluster').value = id;
+
 </script>
 {% endblock %}

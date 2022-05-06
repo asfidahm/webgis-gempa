@@ -79,6 +79,9 @@ function data_jembatan(parent, feature){
     side_info.className = "side-info";
 
     new_row.addEventListener("click", function(e) {
+      if ($(window).width() < 412) {
+        closeNavRight()
+      }
       var latlng = L.latLng(feature.properties.lintang_y, feature.properties.bujur_x);
       map.setView(latlng, 14);
       var popup = L.popup()
@@ -105,7 +108,7 @@ function data_infrastruktur(parent, feature){
     side_info.className = "side-info";
 
     new_row.addEventListener("click", function(e) {
-      if ($(window).width() < 376) {
+      if ($(window).width() < 412) {
         closeNavRight()
       }
       var latlng = L.latLng(feature.properties.lintang_y, feature.properties.bujur_x);
@@ -400,7 +403,8 @@ $.ajax({
   success: function(response) {
     var jembatan = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Kode Jembatan</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.nomor_jembatan+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_jembatan(elemjembatan, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -420,7 +424,8 @@ $.ajax({
   success: function(response) {
     var bendungan = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elembendungan, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -440,7 +445,8 @@ $.ajax({
   success: function(response) {
     var tpa = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemtpa, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -460,7 +466,8 @@ $.ajax({
   success: function(response) {
     var spam = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemspam, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -480,7 +487,8 @@ $.ajax({
   success: function(response) { 
     var iplt = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemiplt, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -500,7 +508,8 @@ $.ajax({
   success: function(response) { 
     var ipal = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemipal, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -520,7 +529,8 @@ $.ajax({
   success: function(response) { 
     var rusunawa = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemrusunawa, feature);
       },
       pointToLayer: function(feature, latlng) {
@@ -540,7 +550,8 @@ $.ajax({
   success: function(response) { 
     var rusus = new L.geoJSON(response, {
       onEachFeature: function (feature,layer) {
-        layer.bindPopup(feature.properties.name).on('click', clickZoomInf);
+        var popup = L.popup().setContent('<table class="table"><thead><tr><th scope="col">Nama</th scope="col"><th scope="col">Provinsi</th><th scope="col">Kota</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.provinsi+'</td><td>'+feature.properties.kota+'</td></tr></tbody></table>');
+        layer.bindPopup(popup).on('click', clickZoomInf);
         data_infrastruktur(elemrusus, feature);
       },
       pointToLayer: function(feature, latlng) {

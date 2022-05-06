@@ -18,8 +18,10 @@ var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Wor
 });
 
 
+var base_url = window.location.origin;
+
 // GET GEOJSON
-var gempa_all = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/gempa/",{
+var gempa_all = new L.GeoJSON.AJAX(base_url + "/api/gempa/",{
   onEachFeature: function (feature,layer) {
     layer.bindPopup('<table class="table"><thead><tr><th scope="col">Lokasi</th scope="col"><th scope="col">Kluster</th><th scope="col">Magnitudo</th></tr></thead><tbody><tr><td>'+feature.properties.name+'</td><td>'+feature.properties.cluster+'</td><td>'+feature.properties.magnitude+'</td></tr></tbody></table> <div class="d-flex justify-content-center"><button class="btn btn-primary btn-sm" onclick=window.open("/infrastruktur-terdampak?id='+feature.id+'");>Go To</button></div>').on('click', clickZoomGempa)
   },
