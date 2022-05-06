@@ -120,10 +120,13 @@ function data_infrastruktur(parent, feature){
     new_row.appendChild(side_info);
     parent.appendChild(new_row);
 };
+
+var base_url = window.location.origin;
+
 // INFORMASI DATA GEMPA LAIN
 $.ajax({
     type: "GET",
-    url: "http://127.0.0.1:8000/api/gempa",
+    url: base_url + "/api/gempa",
     dataType: "json",
     success: function(response) {
       list_items = response
@@ -356,10 +359,11 @@ const urlParams = new URLSearchParams(queryString);
 const num = urlParams.get('id')
 const id = num || 1;
 
+
 // GET GEOJSON DATA
 $.ajax({
     type: "GET",
-    url: "http://127.0.0.1:8000/api/gempa/" + id,
+    url: base_url + "/api/gempa/" + id,
     dataType: "json",
     success: function(response) {
       
@@ -391,7 +395,7 @@ const info_jembatan = document.getElementById("jembatan-info");
 const elemjembatan = document.getElementById("JembatanNasional");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/jembatan/" + id,
+  url: base_url + "/api/jembatan/" + id,
   dataType: "json",
   success: function(response) {
     var jembatan = new L.geoJSON(response, {
@@ -411,7 +415,7 @@ const info_bendungan = document.getElementById("bendungan-info");
 const elembendungan = document.getElementById("Bendungan");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/bendungan/" + id,
+  url: base_url + "/api/bendungan/" + id,
   dataType: "json",
   success: function(response) {
     var bendungan = new L.geoJSON(response, {
@@ -431,7 +435,7 @@ const info_tpa = document.getElementById("tpa-info");
 const elemtpa = document.getElementById("TPA");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/tpa/" + id,
+  url: base_url + "/api/tpa/" + id,
   dataType: "json",
   success: function(response) {
     var tpa = new L.geoJSON(response, {
@@ -451,7 +455,7 @@ const info_spam = document.getElementById("spam-info");
 const elemspam = document.getElementById("SPAM");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/spam/" + id,
+  url: base_url + "/api/spam/" + id,
   dataType: "json",
   success: function(response) {
     var spam = new L.geoJSON(response, {
@@ -471,7 +475,7 @@ const info_iplt = document.getElementById("iplt-info");
 const elemiplt = document.getElementById("IPLT");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/iplt/" + id,
+  url: base_url + "/api/iplt/" + id,
   dataType: "json",
   success: function(response) { 
     var iplt = new L.geoJSON(response, {
@@ -491,7 +495,7 @@ const info_ipal = document.getElementById("ipal-info");
 const elemipal = document.getElementById("IPAL");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/ipal/" + id,
+  url: base_url + "/api/ipal/" + id,
   dataType: "json",
   success: function(response) { 
     var ipal = new L.geoJSON(response, {
@@ -511,7 +515,7 @@ const info_rusunawa = document.getElementById("rusunawa-info");
 const elemrusunawa = document.getElementById("Rusunawa");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/rusunawa/" + id,
+  url: base_url + "/api/rusunawa/" + id,
   dataType: "json",
   success: function(response) { 
     var rusunawa = new L.geoJSON(response, {
@@ -531,7 +535,7 @@ const info_rusus = document.getElementById("rusus-info");
 const elemrusus = document.getElementById("Rusus");
 $.ajax({
   type: "GET",
-  url: "http://127.0.0.1:8000/api/rusus/" + id,
+  url: base_url + "/api/rusus/" + id,
   dataType: "json",
   success: function(response) { 
     var rusus = new L.geoJSON(response, {
@@ -560,4 +564,7 @@ function changebasemap(basemap) {
   map.removeLayer(esri);
   map.removeLayer(Esri_WorldTopoMap);
   map.addLayer(basemap);
+  if ($(window).width() < 412) {
+    closeNavRight()
+  }
 }

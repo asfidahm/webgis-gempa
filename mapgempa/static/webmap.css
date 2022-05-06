@@ -144,6 +144,15 @@ p.sector-title {
   width: 100%;
 }
 
+.modal-btn {
+  background: #5777ba !important;
+  border: none;
+}
+
+.modal-btn:hover {
+  background: #0b5ed7 !important;
+}
+
 .panel-title {
   font-size: 12px;
   text-align: center;
@@ -280,7 +289,7 @@ p.sector-title {
     color: #FFFFFF;
   }
 }
-@media (max-width: 376px) {
+@media (max-width: 411px) {
   .sidebar {
     width: 100vw;
   }

@@ -8,7 +8,7 @@ function openNavLeft() {
   if ($(window).width() < 767) {
     document.getElementById("open-button-right").style.display = "none";
   }
-  if ($(window).width() < 376) {
+  if ($(window).width() < 412) {
     document.getElementById("toggle-left").style.left = "75vw";
     document.getElementById("toggle-left").style.top = "90%";
 
@@ -29,7 +29,7 @@ function closeNavLeft() {
   if ($(window).width() < 767) {
     document.getElementById("open-button-right").style.display = "block";
   }
-  if ($(window).width() < 376) {
+  if ($(window).width() < 412) {
     document.getElementById("toggle-left").style.left = "100vw";
     document.getElementById("toggle-left").style.top = null;
 
@@ -50,7 +50,7 @@ function openNavRight() {
   if ($(window).width() < 767) {
     document.getElementById("open-button-left").style.display = "none";
   }
-  if ($(window).width() < 376) {
+  if ($(window).width() < 412) {
     document.getElementById("toggle-right").style.right = "75vw";
     document.getElementById("toggle-right").style.top = "90%";
 
@@ -71,7 +71,7 @@ function closeNavRight() {
   if ($(window).width() < 767) {
     document.getElementById("open-button-left").style.display = "block";
   }
-  if ($(window).width() < 376) {
+  if ($(window).width() < 412) {
     document.getElementById("toggle-right").style.right = "100vw";
     document.getElementById("toggle-right").style.top = null;
 
