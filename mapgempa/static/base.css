@@ -36,3 +36,10 @@ body {
     background: #5777ba;
     border-color: #5777ba;
 }
+
+@media (max-width: 991px) {
+    .peta-index {
+        height: 400px;
+        padding-top: 20px;
+    }
+}

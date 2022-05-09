@@ -6,7 +6,7 @@ var map = new L.Map('map',{
 });
 
 // BASE LAYER
-var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18});
 map.addLayer(osm);
 
