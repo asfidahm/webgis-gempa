@@ -12,6 +12,8 @@ class gempa(models.Model):
     datetime = models.DateTimeField(null=True)
     estimasiradius = models.FloatField(null=True)
     jumlahinf = models.IntegerField(null=True)
+    normal_mag = models.FloatField(null=True)
+    normal_inf = models.FloatField(null=True)
     cluster = models.IntegerField(null=True)
 
     geom = models.PointField()

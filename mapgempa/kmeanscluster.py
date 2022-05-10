@@ -1,6 +1,6 @@
 import os
 from sklearn.cluster import KMeans
-from .models import gempa, kluster
+from mapgempa.models import gempa, kluster
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,12 +16,17 @@ def inf_cluster():
     # NORMALISASI MAGNITUDO DAN JUMLAH INFRASTRUKTUR BERPOTENSI TERDAMPAK
     normalized_inf = []
     normalized_mag = []
-
+    
     i = 0
-    for n in data.magnitude:
+    
+    for elem in qs:
         normal_mag = (data.magnitude[i]-data.magnitude.min())/(data.magnitude.max()-data.magnitude.min())
         normal_inf = (data.jumlahinf[i]-data.jumlahinf.min())/(data.jumlahinf.max()-data.jumlahinf.min())
         
+        elem.normal_mag = normal_mag
+        elem.normal_inf = normal_inf
+
+        elem.save()
         normalized_mag.append(normal_mag)
         normalized_inf.append(normal_inf)
         i += 1

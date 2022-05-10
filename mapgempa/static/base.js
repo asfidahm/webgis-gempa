@@ -99,6 +99,10 @@ function download() {
   printWindow.print();
 };
 
+$(document).ready(function() {
+  $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
+
 // INDEX
 const lightbox = GLightbox({
   touchNavigation: true,

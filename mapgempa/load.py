@@ -92,9 +92,9 @@ def load_data(verbose=True):
     rs.save(strict=True, verbose=verbose)
 
 def preprocess():
-    qs = gempa.objects.all()
+    qs = gempa.objects.order_by('id')
+
     for elem in qs:
-        i = 0
         elem.datetime = datetime.strptime(elem.timetemp, '%Y/%m/%d %H:%M:%S.%f')
         eq = float(elem.magnitude) - 0.614
         elem.estimasiradius = round(1.4*(eq**3))
@@ -106,5 +106,5 @@ def preprocess():
         ia = ipal.objects.filter(geom__distance_lt = (elem.geom, D(km=elem.estimasiradius)))
         rw = rusunawa.objects.filter(geom__distance_lt = (elem.geom, D(km=elem.estimasiradius)))
         rs = rumah_khusus.objects.filter(geom__distance_lt = (elem.geom, D(km=elem.estimasiradius)))
-        elem.jumlahinf = i + len(jm) + len(bn) + len(tp) + len(sp) + len(il) + len(ia) + len(rw) + len(rs)
+        elem.jumlahinf = len(jm) + len(bn) + len(tp) + len(sp) + len(il) + len(ia) + len(rw) + len(rs)
         elem.save()

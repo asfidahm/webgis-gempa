@@ -12,8 +12,53 @@ Kluster Data Gempa
 
 {% block extracontent %}
 <h2 class="text-center">Kluster Data Gempa Menggunakan Algoritma K-Means Clustering</h3>
-<div id="mappage" class="mt-5"></div>
 <div class="row d-flex justify-content-center">
+  <div class="col-12 mt-3">
+    <div id="mappage"></div>
+  </div>  
+  <div class="col-lg-12 mt-4 konten">
+    <p>
+      Salah satu fitur yang diterapkan pada WebGIS ini adalah analisis pengelompokkan data gempa pada database dengan algoritma K-Means Clustering berdasarkan magnitudo gempa dan 
+      jumlah infrastruktur berpotensi terdampak. Pengelompokkan data gempa dilakukan untuk mendapatkan kelompok data gempa berdasarkan kekuatan gempa dan potensi dampak yang 
+      dihasilkan sehingga instansi-instansi terkait dapat menyusun skala prioritas dan mengetahui daerah yang memiliki kerentanan terhadap bencana gempa bumi.
+      Tahapan yang dilakukan pada analisis pengelompokkan data gempa ini dibagi menjadi 3 tahapan, yaitu pengumpulan data, preprocessing data, dan analisis clustering dengan algoritma K-Means.
+    </p>
+    <p>
+      Tahapan pertama dari analisis pengelompokan data gempa ini merupakan pengumpulan data kejadian gempa yang bersumber dari dataset gempa dari situs web Earthquake Hazards Program 
+      milik United States Geological Survey (USGS) melalui situs https://earthquake.usgs.gov/. Data kejadian gempa yang digunakan merupakan data kejadian gempa pada tahun 2020-2021
+      dengan batasan wilayah berada diantara 94°BT - 142°BT hingga 7°LU - 12°LS dan magnitudo diatas 4,5. 
+      Variabel data yang digunakan dalam K-Means Clustering adalah kekuatan magnitudo kejadian gempa dan jumlah infrastruktur berpotensi terdampak kejadian gempa.
+    </p>
+    <p> 
+      Tahapan selanjutnya adalah preprocessing data yang terdiri dari penentuan variabel jumlah infrastruktur berpotensi terdampak tiap kejadian gempa dan normalisasi data. 
+      Penentuan variabel jumlah infrastruktur berpotensi terdampak didapatkan dari banyaknya infrastruktur PUPR yang berada pada radius gempa dirasakan dari pusat kejadian gempa. 
+      Radius gempa dirasakan dihitung dengan menggunakan rumus estimasi radius gempa dirasakan yang disusun oleh Guttenberg dan C. F. Richter (1956). 
+      Estimasi radius gempa dirasakan dihitung dengan memperhatikan persepsi minimum pada radius terluar mengalami percepatan pergerakan tanah sebesar 1 gal.
+      Berikut merupakan rumus estimasi radius gempa dirasakan:
+    </p>
+    <div class="d-flex justify-content-center" style="height: 30px;" data-aos="fade-up">
+      <img src="{% static 'assets/img/equation.png' %}" class="img-fluid" alt="rumus-radius">
+    </div>
+    <p style="text-indent: 0px;">
+      Dimana r merupakan radius gempa dirasakan dan M adalah magnitudo gempa.
+    </p>
+    <p>
+      Apabila seluruh variabel data kejadian gempa telah didapatkan, selanjutnya dilakukan normalisasi data dengan menggunakan metode normalisasi min-max. 
+      Normalisasi data dilakukan untuk mengubah variabel data agar memiliki distribusi yang serupa. Rumus perhitungan normalisasi min-max adalah sebagai berikut:
+    </p>
+    <div class="d-flex justify-content-center" style="height: 30px;" data-aos="fade-up">
+      <img src="{% static 'assets/img/normalized.png' %}" class="img-fluid" alt="rumus-radius">
+    </div>
+    <p style="text-indent: 0px;">
+      Dimana minRange dan maxRange merupakan jangkauan skala normal yang diinginkan, minValue merupakan nilai variabel terendah,
+      maxValue merupakan nilai variabel tertinggi, serta x merupakan nilai variabel tiap kejadian gempa.
+    </p>
+    <p>
+      Tahapan akhir dari analisis pengelompokkan data gempa ini adalah analisis clustering dengan menggunakan algoritma K-Means. Analisis clustering dilakukan menggunakan bahasa pemrograman Python
+      dengan bantuan library SKLearn sehingga proses analisis dapat dilakukan sepenuhnya dalam bagian server web. Data kejadian gempa dikelompokkan menjadi tiga kluster yang meliputi "Kluster 0", 
+      "Kluster 1", dan "Kluster 2".
+    </p>
+  </div>
   <div class="col-lg-6" data-aos="fade-up">
     <img src="{% static 'assets/img/cluster_figure.png' %}" class="img-fluid" alt="diagram-kluster">
   </div>
@@ -29,36 +74,45 @@ Kluster Data Gempa
         <th scope="col" class="col-3">Magnitudo</th>
         <th scope="col" class="col-3">Infrastruktur Berpotensi Terdampak</th>
       </tr>
-      {% for kluster in kluster %}
+      {% for n in kluster %}
       <tr>
         <td scope="row">
-          <span class="simbol" style="background-color: {{ kluster.warna }};"></span>
+          <span class="simbol" style="background-color: {{ n.warna }};"></span>
         </td>
-        <th class="my-auto">{{ kluster.name }}</th>
-        <td>{{ kluster.mag_centroid }}</td>
-        <td>{{ kluster.inf_centroid }}</td>
-        <td>{{ kluster.jumlah }}</td>
+        <th class="my-auto">{{ n.name }}</th>
+        <td>{{ n.mag_centroid }}</td>
+        <td>{{ n.inf_centroid }}</td>
+        <td>{{ n.jumlah }}</td>
       </tr>
       {% endfor %}
     </table>
   </div>
   <div class="col-lg-12 mt-4 konten">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam massa, egestas feugiat odio at, posuere elementum nulla. 
-      Maecenas malesuada arcu a lectus egestas posuere. Fusce non vulputate massa. Donec cursus tellus et leo elementum, vel efficitur diam 
-      fermentum. Quisque non tellus dui. Mauris porttitor, justo vel luctus varius, neque arcu rutrum nunc, a placerat metus nibh eu metus. Donec 
-      id quam tempus, tempus orci nec, tempus eros. Nullam ultricies posuere condimentum.
-    </p>
-    <div class="d-flex justify-content-center" style="height: 30px;" data-aos="fade-up">
-      <img src="{% static 'assets/img/equation.png' %}" class="img-fluid" alt="rumus-radius">
-    </div>
-    <p>
-      Aliquam urna felis, hendrerit et sodales nec, porta consectetur urna. Nulla in venenatis libero. Orci varius natoque penatibus et magnis 
-      dis parturient montes, nascetur ridiculus mus. Integer quis tincidunt nibh. Curabitur rhoncus tellus vitae diam congue, et semper arcu imperdiet. 
-      Sed volutpat in lacus eget lobortis. Nam malesuada ligula et felis pharetra placerat. Nulla facilisi. Sed a mi semper ante vestibulum scelerisque. 
-      Suspendisse ultrices vitae justo et dapibus. Nulla facilisi. Sed tempus est nec velit gravida, egestas tempus est molestie. Nunc non dui nulla. 
-      Nullam vehicula, urna at hendrerit feugiat, orci ligula lacinia nulla, posuere fringilla purus purus a nibh. Donec at diam id neque sodales tristique.
-    </p>
+    <P>
+      Grafik dan Tabel diatas merupakan hasil dari clustering data kejadian gempa dengan menggunakan algoritma K-Means.
+      Didapatkan tiga kluster gempa yang ditandai dengan warna-warna yang berbeda, "Kluster 0" dengan warna biru, "Kluster 1" dengan warna hijau, "Kluster 2" 
+      dengan warna merah, dan tanda hitam pada grafik merupakan centroid tiap-tiap kluster.
+    </P>
+    <P>
+      {% for n in kluster %}
+        {% if n.name == 'Kluster 2' %} 
+          Dari hasil yang didapatkan, dapat diketahui gempa yang terkategorikan pada 
+          <span class="kluster-tinggi">{{ n.name }}</span> 
+          merupakan kelompok gempa dengan potensi dampak yang paling besar, kluster ini memiliki centroid paling tinggi jika dibandingkan dengan kluster lain yaitu dengan nilai centroid mangitudo dalam skala normalisasi sebesar 
+          <span class="centroid-mag-tinggi">{{ n.mag_centroid }}</span> dan centroid Infrastruktur Berpotensi Terdampak dalam skala normalisasi sebesar 
+          <span class="centroid-inf-tinggi">{{ n.inf_centroid }}</span>.
+        {% endif %}
+      {% endfor %}
+        <!-- CHANGE WITH APROPRIATE CATEGORIES -->
+      {% for n in kluster %}
+        {% if n.name == 'Kluster 0' %}
+          Selanjutnya kluster dengan potensi dampak menengah merupakan 
+          <span class="kluster-tengah">{{ n.name }}</span> dengan nilai centroid mangitudo dalam skala normalisasi sebesar 
+          <span class="centroid-mag-tengah">{{ n.mag_centroid }}</span> dan centroid Infrastruktur Berpotensi Terdampak dalam skala normalisasi sebesar 
+          <span class="centroid-inf-tengah">{{ n.inf_centroid }}</span>.
+        {% endif %}
+      {% endfor %}
+    </P>
   </div>
 </div>
 {% endblock %}
