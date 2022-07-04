@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i$orkgk%u1)l6h$lhfd4@yg$l^y69#c4rsqo50e@w-x__so=y&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.184.0.3', 'infragempa.com', '.infragempa.com', '34.101.255.93']
 
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': 'LOCALHOST',
-        'NAME': 'jembatanbedadb',
+        'NAME': 'gempadb',
         'PASSWORD': '321654',
         'PORT': '5432',
         'USER': 'postgres',
@@ -128,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = '/home/asfidahm/webgis-gempa/mapgempa/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
